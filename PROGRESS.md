@@ -7,13 +7,29 @@
 
 ## 1. Project Status Overview
 - **Current Phase:** Phase 1 (Project Scaffolding & Deterministic Foundation)
-- **Active Task:** Task 1.3 (Metadata & QR Detectors)
-- **Build Status:** Green (19/19 tests passing)
+- **Active Task:** Task 1.4 (Original File Immutability Test)
+- **Build Status:** Green (25/25 tests passing)
 - **Overall Health:** 🟢 On Track
 
 ---
 
 ## 2. Session Log
+
+### Session 3 — Task 1.3: Metadata & QR Detectors (2026-10-03)
+- **What was done:**
+  - Implemented [`app/detectors/metadata_detector.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/detectors/metadata_detector.py):
+    - EXIF GPS coordinate extraction and conversion to decimal degrees.
+    - Defensively masked coordinate evidence (`Lat: 37.77****, Lon: -122.25****`).
+    - Device hardware fingerprinting detection (Make, Model, Serial Number, Artist).
+  - Implemented [`app/detectors/qr_detector.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/detectors/qr_detector.py):
+    - OpenCV QR code detection with exact `BoundingBox` corner coordinate calculation.
+    - Sensitive payload risk categorization (Wi-Fi network passphrases, 2FA/TOTP seeds, authentication parameters).
+    - Masked evidence formatting so hidden QR credentials are never leaked.
+  - Implemented unit test suites:
+    - [`tests/test_metadata_detector.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_metadata_detector.py) (3 tests).
+    - [`tests/test_qr_detector.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_qr_detector.py) (3 tests).
+- **Evidence:** Ran `.\.venv\Scripts\pytest -v` -> 25 passed in 2.77s.
+- **What's Next:** Execute Phase 1, Task 1.4: Original File Immutability test (SHA-256 verification).
 
 ### Session 2 — Task 1.2: Regex & Secret Detector (2026-10-03)
 - **What was done:**

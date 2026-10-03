@@ -17,9 +17,10 @@
   - Implement regex patterns for OpenAI keys, AWS keys, JWTs, emails, phone numbers, and SSNs.
   - Implement deterministic secret masking utility (e.g. `sk-live-••••••91a`).
   - Added Luhn validation for credit cards and span overlap resolution. Verified with 12 tests (19 total suite).
-- [ ] **Task 1.3: Metadata & QR Detectors**
+- [x] **Task 1.3: Metadata & QR Detectors**
   - Extract EXIF/GPS metadata from images.
   - Detect and decode QR codes / barcodes to inspect URL or text payloads.
+  - Added BoundingBox calculation and masked payload classification. Verified with 6 tests (25 total suite).
 - [ ] **Task 1.4: Original File Immutability Test**
   - Write test proving input file SHA-256 hash never changes.
 - [ ] **🔒 Checkpoint 1.5: Review Phase 1 Detector Coverage**
