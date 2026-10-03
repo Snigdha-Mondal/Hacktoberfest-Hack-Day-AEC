@@ -42,8 +42,8 @@
 - [x] **Task 2.3: Risk Fusion Layer**
   - Calculate composite risk: `risk = sensitivity × exposure × confidence`.
   - Reconcile and de-duplicate overlapping bounding boxes between regex and vision findings (IoU & containment). Verified with 6 tests (51 total suite).
-- [ ] **🔒 Checkpoint 2.4: Review Gemma 4 Findings Quality**
-  - Verify explanations in English (and Bengali support), test prompt injection resilience.
+- [x] **🔒 Checkpoint 2.4: Review Gemma 4 Findings Quality**
+  - Human review completed and approved. (55 tests passing, email & phone elevated to CRITICAL).
 
 
 ---
@@ -51,13 +51,13 @@
 ## Phase 3: Redaction Engine & Safe Export
 *Exit Goal: User-controlled visual redaction produces verified clean copies with zero original damage.*
 
-- [ ] **Task 3.1: Redaction Renderer (Pillow / OpenCV)**
-  - Implement Solid Blackout, Gaussian Blur, Pixelation, and Crop methods on specified bounding boxes.
-- [ ] **Task 3.2: Metadata Stripper**
-  - Remove all EXIF, GPS, camera metadata from sanitized output image.
-- [ ] **Task 3.3: Safe Export Pipeline**
+- [x] **Task 3.1: Redaction Renderer (Pillow / OpenCV)**
+  - Implemented Solid Blackout, Gaussian Blur, Pixelation, and Crop methods on specified bounding boxes. Verified with 5 tests.
+- [x] **Task 3.2: Metadata Stripper**
+  - Removed all EXIF, GPS, camera metadata from sanitized output image. Verified with 2 tests.
+- [x] **Task 3.3: Safe Export Pipeline**
   - Save output strictly to `<original_name>-safedrop.<ext>`.
-  - Enforce zero-overwrite safeguards.
+  - Enforce zero-overwrite safeguards and cryptographic verification. Verified with 3 tests (65 total suite).
 - [ ] **🔒 Checkpoint 3.4: Visual Inspection of Exported Samples**
   - Test redaction quality across screenshot, ID card, and photo samples.
 

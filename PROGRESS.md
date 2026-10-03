@@ -6,14 +6,43 @@
 ---
 
 ## 1. Project Status Overview
-- **Current Phase:** Phase 2 (Gemma 4 Vision Adapter & Risk Fusion)
-- **Active Task:** 🔒 Checkpoint 2.4 (Review Gemma 4 Findings Quality)
-- **Build Status:** Green (51/51 tests passing)
-- **Overall Health:** 🟢 Phase 2 Implementation Complete — Ready for Review
+- **Current Phase:** Phase 3 (Redaction Engine & Safe Export)
+- **Active Task:** 🔒 Checkpoint 3.4 (Visual Inspection of Exported Samples)
+- **Build Status:** Green (65/65 tests passing)
+- **Overall Health:** 🟢 Phase 3 Implementation Complete — Ready for Review
 
 ---
 
 ## 2. Session Log
+
+### Session 10 — Task 3.3: Safe Export Pipeline (2026-10-03)
+- **What was done:**
+  - Implemented [`app/redaction/export.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/redaction/export.py):
+    - `SafeExportPipeline` orchestrating visual redaction, EXIF stripping, and non-destructive export.
+    - Automatic output path generation with `<name>-safedrop.<ext>` convention.
+    - Zero-overwrite protection backed by `FileGuard` with bit-level SHA-256 integrity verification before and after export.
+  - Implemented unit test suite in [`tests/test_safe_export_pipeline.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_safe_export_pipeline.py) (3 tests).
+- **Evidence:** 65 total tests passing in 1.23s.
+- **What's Next:** Checkpoint 3.4 🔒: Visual inspection of exported samples across screenshots, ID cards, and photos.
+
+### Session 9 — Task 3.2: Metadata Stripper (2026-10-03)
+- **What was done:**
+  - Implemented [`app/redaction/metadata_strip.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/redaction/metadata_strip.py):
+    - `strip_metadata()` creating a pristine in-memory copy without EXIF, GPS, camera, or device tags.
+    - `strip_metadata_from_file()` ensuring the original file is never mutated while exporting a zero-EXIF sanitized image.
+  - Implemented unit test suite in [`tests/test_metadata_stripper.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_metadata_stripper.py) (2 tests).
+- **Evidence:** 62 total tests passing.
+
+### Session 8 — Task 3.1: Redaction Renderer (2026-10-03)
+- **What was done:**
+  - Implemented [`app/redaction/renderer.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/redaction/renderer.py):
+    - Solid Blackout (`RecommendedAction.BLACKOUT`) permanently destroying pixels with solid fill.
+    - Gaussian Blur (`RecommendedAction.BLUR`) for biometric faces and ambient identifiers.
+    - Pixelation (`RecommendedAction.PIXELATE`) downsampling/upsampling mosaic effect.
+    - Non-mutating operation guaranteeing input `Image.Image` is never modified in memory.
+  - Implemented unit test suite in [`tests/test_redaction_renderer.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_redaction_renderer.py) (5 tests).
+- **Evidence:** 60 total tests passing.
+
 
 ### Session 7 — Task 2.3: Risk Fusion Layer (2026-10-03)
 - **What was done:**
