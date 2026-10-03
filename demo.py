@@ -117,19 +117,17 @@ def run_demo():
     print(f"    -> Original File Hash: SHA-256 Verified Untouched")
     print(f"    -> Safe Export Target: {safe_path.name}\n")
 
-    print("-" * 88)
-    print(f"{'CATEGORY':<14} | {'SOURCE':<13} | {'RISK':<9} | {'ACTION':<9} | {'MASKED EVIDENCE'}")
-    print("-" * 88)
+    print("-" * 78)
+    print(f"{'CATEGORY':<14} | {'RISK':<9} | {'EVIDENCE (MASKED)':<26} | {'REASON'}")
+    print("-" * 78)
     for f in report.findings:
-        evidence = clean_mask(f.masked_evidence)
-        if len(evidence) > 28:
-            evidence = evidence[:25] + "..."
-        print(f"{f.category.value:<14} | {f.detector_source:<13} | {f.risk.value.upper():<9} | {f.recommended_action.value.upper():<9} | {evidence}")
-    print("-" * 88)
-
-    print("\n[*] Multilingual Explanation Preview (Bengali Support):")
-    print("    -> [EN] Live secret credentials and biometric face detected. Unsafe to share.")
-    print("    -> [BN] সরাসরি গোপন ক্রেডেনশিয়াল এবং বায়োমেট্রিক মুখ শনাক্ত হয়েছে। শেয়ার করা অনিরাপদ।")
+        risk_str = f.risk.value.upper()
+        evidence_str = clean_mask(f.masked_evidence)
+        if len(evidence_str) > 26:
+            evidence_str = evidence_str[:23] + "..."
+        reason_str = f.reason if len(f.reason) <= 28 else f.reason[:25] + "..."
+        print(f"{f.category.value:<14} | {risk_str:<9} | {evidence_str:<26} | {reason_str}")
+    print("-" * 78)
 
     print("\n[V] SafeDrop Preflight Decision: BLOCKED (Requires User Redaction)")
     print(f"[V] Target Output File: {safe_path.name} (Original preserved byte-for-byte)")
