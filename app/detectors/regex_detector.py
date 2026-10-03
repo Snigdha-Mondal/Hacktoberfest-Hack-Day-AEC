@@ -146,10 +146,10 @@ class RegexDetector:
             RegexRule(
                 name="Phone Number",
                 category=SensitiveCategory.PHONE,
-                pattern=r"\b(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b",
+                pattern=r"(?:(?:\+|00)[1-9]\d{0,3}[-.\s]?(?:\d[-.\s]?){7,12}\d|(?:^|(?<=[^\d]))[6-9]\d{4}[-.\s]?\d{5}(?=[^\d]|$)|(?:^|(?<=[^\d]))[6-9]\d{9}(?=[^\d]|$)|(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})",
                 risk=RiskLevel.CRITICAL,
                 reason="Direct personal contact identifier. Critical risk of SMS phishing, SIM swapping, and harassment.",
-                confidence=0.92,
+                confidence=0.95,
             ),
         ]
 

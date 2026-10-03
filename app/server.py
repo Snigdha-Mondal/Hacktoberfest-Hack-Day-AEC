@@ -19,6 +19,7 @@ from pydantic import BaseModel
 from PIL import Image
 
 from app.detectors.metadata_detector import MetadataDetector
+from app.detectors.ocr_detector import OCRDetector
 from app.detectors.qr_detector import QRDetector
 from app.detectors.regex_detector import RegexDetector
 from app.model.gemma_adapter import GemmaVisionAdapter
@@ -135,7 +136,15 @@ async def scan_file(file: UploadFile = File(...)):
     except Exception:
         pass
 
-    # 3. Gemma 4 Vision Adapter
+    # 3. Deterministic OCR text detector
+    ocr_detector = OCRDetector()
+    try:
+        ocr_findings = ocr_detector.scan_image(str(temp_path), width, height)
+        deterministic_findings.extend(ocr_findings)
+    except Exception:
+        pass
+
+    # 4. Gemma 4 Vision Adapter
     gemma_adapter = GemmaVisionAdapter(timeout=20.0)
     model_findings, flags, summary = gemma_adapter.analyze_image(temp_path)
 

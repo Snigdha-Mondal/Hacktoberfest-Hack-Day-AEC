@@ -16,5 +16,13 @@ fastapi>=0.115.0
 uvicorn>=0.30.0
 python-multipart>=0.0.9
 
+# Local-First Offline OCR Engine
+rapidocr-onnxruntime>=1.2.0
+onnxruntime>=1.17.0
+pyclipper>=1.2.1
+Shapely>=1.7.1
+PyYAML>=6.0
+six>=1.15.0
+
 # Testing & Evaluation Benchmark
 pytest>=8.0.0
