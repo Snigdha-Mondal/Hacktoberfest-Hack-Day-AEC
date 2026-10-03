@@ -98,3 +98,27 @@ class FileGuard:
             if not candidate.exists() and candidate != self.original_path:
                 return candidate
             counter += 1
+
+
+def generate_safe_output_path(
+    original_path: Union[str, pathlib.Path],
+    suffix: str = "-safedrop",
+    target_dir: Union[str, pathlib.Path, None] = None,
+) -> pathlib.Path:
+    """Convenience helper to generate a non-destructive destination path for an input file."""
+    path = pathlib.Path(original_path).resolve()
+    directory = pathlib.Path(target_dir).resolve() if target_dir else path.parent
+    stem = path.stem
+    ext = path.suffix
+
+    candidate = directory / f"{stem}{suffix}{ext}"
+    if not candidate.exists() and candidate != path:
+        return candidate
+
+    counter = 1
+    while True:
+        candidate = directory / f"{stem}{suffix}-{counter}{ext}"
+        if not candidate.exists() and candidate != path:
+            return candidate
+        counter += 1
+

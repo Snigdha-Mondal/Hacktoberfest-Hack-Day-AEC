@@ -6,14 +6,47 @@
 ---
 
 ## 1. Project Status Overview
-- **Current Phase:** Phase 1 (Project Scaffolding & Deterministic Foundation)
-- **Active Task:** 🔒 Checkpoint 1.5 (Human Review of Phase 1 Detector Coverage)
-- **Build Status:** Green (32/32 tests passing)
-- **Overall Health:** 🟢 Phase 1 Implementation Complete — Ready for Review
+- **Current Phase:** Phase 2 (Gemma 4 Vision Adapter & Risk Fusion)
+- **Active Task:** 🔒 Checkpoint 2.4 (Review Gemma 4 Findings Quality)
+- **Build Status:** Green (51/51 tests passing)
+- **Overall Health:** 🟢 Phase 2 Implementation Complete — Ready for Review
 
 ---
 
 ## 2. Session Log
+
+### Session 7 — Task 2.3: Risk Fusion Layer (2026-10-03)
+- **What was done:**
+  - Implemented [`app/risk/policy.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/risk/policy.py):
+    - Sensitivity scale mapping: `API_KEY` (1.0), `PASSWORD` (1.0), `BANK_DATA` (0.95), `GOVERNMENT_ID` (0.90), `MEDICAL` (0.85), `SIGNATURE` (0.80), `QR_CODE` (0.75), `FACE` (0.65), `EMAIL`/`PHONE`/`ADDRESS` (0.60), `PRIVATE_TEXT` (0.50).
+    - Composite risk formula: `risk_score = sensitivity × exposure × confidence`.
+    - Score threshold mapping to `RiskLevel` (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`).
+  - Implemented [`app/risk/fusion.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/risk/fusion.py):
+    - BoundingBox Intersection over Union (IoU) calculation and containment detection (`boxes_overlap`).
+    - Finding merger (`merge_findings`): unites overlapping bounding boxes, preserves specific masked evidence, combines semantic reasoning, and marks `detector_source="fused"`.
+    - End-to-end `fuse_findings()` generating a unified, validated `RiskReport`.
+  - Implemented unit test suite in [`tests/test_risk_fusion.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_risk_fusion.py) (6 tests).
+- **Evidence:** Ran `.\.venv\Scripts\pytest -v` -> 51 passed in 1.19s.
+- **What's Next:** Checkpoint 2.4 🔒: Human review of Gemma 4 findings quality, Bengali support, and prompt injection resilience.
+
+### Session 6 — Task 2.2: Gemma 4 Adapter Client (2026-10-03)
+- **What was done:**
+  - Implemented [`app/model/gemma_adapter.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/model/gemma_adapter.py):
+    - `GemmaVisionAdapter` client communicating with local Ollama (`http://localhost:11434`, model `gemma4:e4b`).
+    - Base64 image encoding and dimension preservation.
+    - Graceful offline fallback: catches `ConnectError`, `TimeoutException`, and HTTP errors, returning structured uncertainty flags without crashing.
+  - Implemented unit test suite in [`tests/test_gemma_adapter.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_gemma_adapter.py) (5 tests).
+- **Evidence:** 45 total tests passing in 1.47s.
+
+### Session 5 — Task 2.1: Gemma 4 Prompt & Schema Enforcement (2026-10-03)
+- **What was done:**
+  - Implemented [`app/model/prompt.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/model/prompt.py):
+    - Evidence-first multimodal system prompt with prompt injection defenses (treating image text as untrusted data).
+    - Multilingual prompt support: English (`SYSTEM_PROMPT_EN`) and Bengali (`SYSTEM_PROMPT_BN`).
+    - Coordinate normalizer `normalize_bounding_box()` supporting 0-1000 scale, 0-1.0 float scale, and pixel dict formats.
+    - Strict JSON parser `parse_gemma_response()` with defensive auto-masking of credentials.
+  - Implemented test suite in [`tests/test_prompt_and_parser.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_prompt_and_parser.py) (8 tests).
+- **Evidence:** 40 total tests passing in 0.72s.
 
 ### Session 4 — Task 1.4: Original File Immutability Test (2026-10-03)
 - **What was done:**

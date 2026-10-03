@@ -24,25 +24,27 @@
 - [x] **Task 1.4: Original File Immutability Test**
   - Write test proving input file SHA-256 hash never changes.
   - Added FileGuard with baseline SHA-256 hashing and zero-overwrite protection. Verified with 7 tests (32 total suite).
-- [ ] **🔒 Checkpoint 1.5: Review Phase 1 Detector Coverage**
-  - Human review of detected patterns, masking rules, and test results.
+- [x] **🔒 Checkpoint 1.5: Review Phase 1 Detector Coverage**
+  - Human review completed and approved. (32 tests passing).
 
 ---
 
 ## Phase 2: Gemma 4 Vision Adapter & Risk Fusion
 *Exit Goal: Gemma 4 analyzes visual context, explains risks in human language, and merges with deterministic findings.*
 
-- [ ] **Task 2.1: Gemma 4 Prompt & Schema Enforcement**
+- [x] **Task 2.1: Gemma 4 Prompt & Schema Enforcement**
   - Draft evidence-first system prompt requiring bounding boxes, category, reason, and uncertainty flags.
-  - Enforce JSON-only output with strict masking of sensitive values.
-- [ ] **Task 2.2: Gemma 4 Adapter Client**
-  - Connect to Gemma 4 (via Google GenAI SDK, Ollama, or local runtime).
-  - Add fallback handling for blurry or ambiguous visual regions.
-- [ ] **Task 2.3: Risk Fusion Layer**
+  - Enforce JSON-only output with strict masking of sensitive values and prompt injection defense.
+  - Multilingual support for English and Bengali ("en", "bn"). Verified with 8 tests (40 total suite).
+- [x] **Task 2.2: Gemma 4 Adapter Client**
+  - Connect to local Gemma 4 on Ollama (`http://localhost:11434`, model `gemma4:e4b`).
+  - Base64 image encoding, dimension scaling, and graceful offline fallback handling. Verified with 5 tests (45 total suite).
+- [x] **Task 2.3: Risk Fusion Layer**
   - Calculate composite risk: `risk = sensitivity × exposure × confidence`.
-  - Reconcile and de-duplicate overlapping bounding boxes between regex and vision findings.
+  - Reconcile and de-duplicate overlapping bounding boxes between regex and vision findings (IoU & containment). Verified with 6 tests (51 total suite).
 - [ ] **🔒 Checkpoint 2.4: Review Gemma 4 Findings Quality**
   - Verify explanations in English (and Bengali support), test prompt injection resilience.
+
 
 ---
 
