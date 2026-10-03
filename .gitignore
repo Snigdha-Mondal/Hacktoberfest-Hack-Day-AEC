@@ -30,6 +30,7 @@ wheels/
 
 # SafeDrop outputs & temporary caches
 temp/
+scratch/
 *-safedrop.*
 *-redacted.*
 *.audit.log

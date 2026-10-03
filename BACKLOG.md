@@ -58,21 +58,21 @@
 - [x] **Task 3.3: Safe Export Pipeline**
   - Save output strictly to `<original_name>-safedrop.<ext>`.
   - Enforce zero-overwrite safeguards and cryptographic verification. Verified with 3 tests (65 total suite).
-- [ ] **🔒 Checkpoint 3.4: Visual Inspection of Exported Samples**
-  - Test redaction quality across screenshot, ID card, and photo samples.
+- [x] **🔒 Checkpoint 3.4: Visual Inspection of Exported Samples**
+  - Human review completed and approved. 3 realistic sample test fixtures verified in `samples/`.
 
 ---
 
 ## Phase 4: Preflight User Interface
 *Exit Goal: Interactive local UI allowing drag-and-drop, bounding box inspection, and category toggles.*
 
-- [ ] **Task 4.1: UI Prototype (Local Web Screen)**
-  - Drag-and-drop file upload, side-by-side preview of original vs. proposed redactions.
-  - Category toggles (e.g., redact ID number, keep face).
-- [ ] **Task 4.2: Export & Audit Report Download**
-  - Download sanitized copy and view summary of what was removed.
+- [x] **Task 4.1: UI Prototype (Local Web Screen)**
+  - Implemented single-page preflight screen with dark aesthetic, drag-and-drop, side-by-side original vs. live redacted preview, interactive SVG bounding boxes, and action selectors.
+- [x] **Task 4.2: Export & Audit Report Download**
+  - Instant download of sanitized copy `<name>-safedrop.<ext>` and cryptographic audit certificate JSON. Verified with 3 tests (68 total suite).
 - [ ] **🔒 Checkpoint 4.3: End-to-End User Experience Sign-off**
-  - Human test of complete preflight flow.
+  - Human test of complete preflight flow in browser.
+
 
 ---
 

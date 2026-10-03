@@ -6,14 +6,35 @@
 ---
 
 ## 1. Project Status Overview
-- **Current Phase:** Phase 3 (Redaction Engine & Safe Export)
-- **Active Task:** 🔒 Checkpoint 3.4 (Visual Inspection of Exported Samples)
-- **Build Status:** Green (65/65 tests passing)
-- **Overall Health:** 🟢 Phase 3 Implementation Complete — Ready for Review
+- **Current Phase:** Phase 4 (Preflight User Interface)
+- **Active Task:** 🔒 Checkpoint 4.3 (End-to-End User Experience Sign-off)
+- **Build Status:** Green (68/68 tests passing)
+- **Overall Health:** 🟢 Phase 4 Implementation Complete — Ready for Review
 
 ---
 
 ## 2. Session Log
+
+### Session 12 — Task 4.2: Export & Audit Report Download (2026-10-03)
+- **What was done:**
+  - Implemented `/api/export` endpoint generating sanitized files `<name>-safedrop.<ext>` with streaming binary download.
+  - Implemented `/api/audit/{file_id}` returning cryptographic audit certificate JSON with SHA-256 verification and detailed findings list.
+  - Verified with automated tests in [`tests/test_server_api.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_server_api.py).
+- **Evidence:** 68 total tests passing in 1.67s.
+- **What's Next:** Checkpoint 4.3 🔒: Human test and review of preflight web interface.
+
+### Session 11 — Task 4.1: UI Prototype & Web Server (2026-10-03)
+- **What was done:**
+  - Implemented FastAPI backend server in [`app/server.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/server.py):
+    - `POST /api/scan`: Ingestion, hashing, multi-detector scanning, and image base64 streaming.
+    - `POST /api/preview`: Real-time preview generation applying user action overrides.
+    - `GET /`: Serves static web UI.
+  - Built frontend interface:
+    - [`app/static/index.html`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/static/index.html): Modern layout with drag-and-drop dropzone, side-by-side original/redacted preview, interactive SVG bounding boxes, stat cards, and action selector deck.
+    - [`app/static/style.css`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/static/style.css): Dark theme aesthetic with Outfit & JetBrains Mono typography, glassmorphic panels, and glowing risk indicators.
+    - [`app/static/app.js`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/static/app.js): Drag-and-drop handler, interactive bounding box highlighting, live preview updater, and download triggers.
+  - Created unit test suite in [`tests/test_server_api.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_server_api.py) (3 tests).
+- **Evidence:** All endpoints verified with TestClient.
 
 ### Session 10 — Task 3.3: Safe Export Pipeline (2026-10-03)
 - **What was done:**
