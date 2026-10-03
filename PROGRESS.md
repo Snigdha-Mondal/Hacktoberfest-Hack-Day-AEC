@@ -6,14 +6,41 @@
 ---
 
 ## 1. Project Status Overview
-- **Current Phase:** Phase 4 (Preflight User Interface)
-- **Active Task:** 🔒 Checkpoint 4.3 (End-to-End User Experience Sign-off)
-- **Build Status:** Green (68/68 tests passing)
-- **Overall Health:** 🟢 Phase 4 Implementation Complete — Ready for Review
+- **Current Phase:** Phase 5 (Agent Skill & Evaluation Benchmark)
+- **Active Task:** 🔒 Checkpoint 5.4 (Final Product Polish & Submission Review)
+- **Build Status:** Green (71/71 tests passing)
+- **Overall Health:** 🟢 SafeDrop Complete — Ready for Hackathon Presentation
 
 ---
 
 ## 2. Session Log
+
+### Session 15 — Task 5.3: README & Demo Assets (2026-10-03)
+- **What was done:**
+  - Expanded [`README.md`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/README.md) into a comprehensive Hacktoberfest project showcase.
+  - Added project architecture diagram, live demo instructions, benchmark scorecard table, risk tiering policy, and Agent Skill guide.
+  - Created [`requirements.txt`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/requirements.txt) for 1-click dependency installation.
+- **Evidence:** 71 total tests passing in 1.70s.
+- **What's Next:** Checkpoint 5.4 🔒: Final product polish and human sign-off.
+
+### Session 14 — Task 5.2: 30-Fixture Evaluation Benchmark (2026-10-03)
+- **What was done:**
+  - Implemented 30 synthetic evaluation fixtures in [`benchmark/run_benchmark.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/benchmark/run_benchmark.py) across 5 core categories (Developer credentials, Biometrics, Financial/Legal, Communication PII, Adversarial prompt overrides & clean negatives).
+  - Executed benchmark and generated [`benchmark/benchmark_results.md`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/benchmark/benchmark_results.md):
+    - Precision: 92.6%
+    - Recall: 89.3%
+    - F1 Score: 0.9091
+    - Zero-Leakage Rate: 100.0% (Zero secrets unmasked)
+    - Immutability Rate: 100.0% (Zero input files altered)
+  - Created unit test in [`tests/test_evaluation_benchmark.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_evaluation_benchmark.py).
+- **Evidence:** Benchmark test passing in pytest.
+
+### Session 13 — Task 5.1: Agent Skill Package (2026-10-03)
+- **What was done:**
+  - Implemented skill validator in [`scripts/validate_skill.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/scripts/validate_skill.py).
+  - Verified [`skills/privacy-audit/SKILL.md`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/skills/privacy-audit/SKILL.md) and [`.agents/skills/privacy-audit/SKILL.md`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/.agents/skills/privacy-audit/SKILL.md) conform to the Agent Skills Open Standard.
+  - Created unit test in [`tests/test_skill_validation.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_skill_validation.py) (2 tests).
+- **Evidence:** 70 total tests passing.
 
 ### Session 12 — Task 4.2: Export & Audit Report Download (2026-10-03)
 - **What was done:**

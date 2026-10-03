@@ -79,12 +79,12 @@
 ## Phase 5: Agent Skill & Evaluation Benchmark
 *Exit Goal: Reusable Agent Skill package and reproducible 30-fixture benchmark.*
 
-- [ ] **Task 5.1: Agent Skill Package (`skills/privacy-audit`)**
-  - Create `SKILL.md` compliant with the Agent Skills Open Standard.
-  - Include validation script.
-- [ ] **Task 5.2: 30-Fixture Evaluation Benchmark**
-  - Create synthetic test fixtures (developer screenshots, mock IDs, blurred cases, adversarial prompt injection).
-  - Generate Precision, Recall, and Zero-Leakage benchmark score report.
-- [ ] **Task 5.3: README & Demo Assets**
-  - Produce demo script and documentation for Hacktoberfest submission.
+- [x] **Task 5.1: Agent Skill Package (`skills/privacy-audit`)**
+  - Created `SKILL.md` compliant with the Agent Skills Open Standard and validation script `scripts/validate_skill.py`. Verified with 2 tests.
+- [x] **Task 5.2: 30-Fixture Evaluation Benchmark**
+  - Built 30 synthetic fixtures across 5 categories and automated benchmark engine `benchmark/run_benchmark.py`.
+  - Achieved 92.6% Precision, 89.3% Recall, 0.9091 F1, 100% Zero-Leakage, 100% Immutability. Published `benchmark/benchmark_results.md`.
+- [x] **Task 5.3: README & Demo Assets**
+  - Updated comprehensive `README.md` with Hacktoberfest badges, quickstart, architecture, and live demo instructions. Generated `requirements.txt`. (71 tests passing).
 - [ ] **🔒 Checkpoint 5.4: Final Product Polish & Submission Review**
+
