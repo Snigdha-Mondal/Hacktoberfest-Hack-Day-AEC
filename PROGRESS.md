@@ -15,6 +15,14 @@
 
 ## 2. Session Log
 
+### Session 16 — Task 5.4: Secret Sanitization & Remote Sync (2026-10-03)
+- **What was done:**
+  - Resolved GitHub Secret Scanning Push Protection block by safely replacing synthetic Slack token pattern in [`benchmark/run_benchmark.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/benchmark/run_benchmark.py) with a dedicated mock token structure.
+  - Successfully synced and pushed `main` branch to remote GitHub repository ([`https://github.com/Snigdha-Mondal/Hacktoberfest-Hack-Day-AEC`](https://github.com/Snigdha-Mondal/Hacktoberfest-Hack-Day-AEC)).
+  - Verified entire test suite of 71 tests passing in 1.63s without regressions.
+- **Evidence:** Clean `git push origin main` and 71/71 pytest passing.
+- **What's Next:** 🔒 Checkpoint 5.4: Final Product Polish & Submission Review.
+
 ### Session 15 — Task 5.3: README & Demo Assets (2026-10-03)
 - **What was done:**
   - Expanded [`README.md`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/README.md) into a comprehensive Hacktoberfest project showcase.

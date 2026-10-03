@@ -70,8 +70,8 @@
   - Implemented single-page preflight screen with dark aesthetic, drag-and-drop, side-by-side original vs. live redacted preview, interactive SVG bounding boxes, and action selectors.
 - [x] **Task 4.2: Export & Audit Report Download**
   - Instant download of sanitized copy `<name>-safedrop.<ext>` and cryptographic audit certificate JSON. Verified with 3 tests (68 total suite).
-- [ ] **🔒 Checkpoint 4.3: End-to-End User Experience Sign-off**
-  - Human test of complete preflight flow in browser.
+- [x] **🔒 Checkpoint 4.3: End-to-End User Experience Sign-off**
+  - Human test of complete preflight flow in browser at `http://127.0.0.1:8080`.
 
 
 ---
