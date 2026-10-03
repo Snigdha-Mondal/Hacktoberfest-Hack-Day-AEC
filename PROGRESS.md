@@ -7,13 +7,25 @@
 
 ## 1. Project Status Overview
 - **Current Phase:** Phase 1 (Project Scaffolding & Deterministic Foundation)
-- **Active Task:** Task 1.4 (Original File Immutability Test)
-- **Build Status:** Green (25/25 tests passing)
-- **Overall Health:** 🟢 On Track
+- **Active Task:** 🔒 Checkpoint 1.5 (Human Review of Phase 1 Detector Coverage)
+- **Build Status:** Green (32/32 tests passing)
+- **Overall Health:** 🟢 Phase 1 Implementation Complete — Ready for Review
 
 ---
 
 ## 2. Session Log
+
+### Session 4 — Task 1.4: Original File Immutability Test (2026-10-03)
+- **What was done:**
+  - Implemented [`app/privacy/file_guard.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/privacy/file_guard.py):
+    - `compute_file_hash()` for SHA-256 integrity calculation.
+    - `FileGuard` class that records initial baseline hash, detects any bit-level tampering, and raises `FileOverwriteError`.
+    - `generate_safe_output_path()` enforcing the `-safedrop` non-destructive naming convention with collision auto-increment.
+    - `validate_destination_path()` strictly barring destination paths equal to the source file.
+  - Implemented comprehensive test suite in [`tests/test_no_original_overwrite.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_no_original_overwrite.py) (7 tests).
+  - Validated that running all detectors (Metadata, QR, Regex) on an image file leaves the disk file byte-for-byte identical.
+- **Evidence:** Ran `.\.venv\Scripts\pytest -v` -> 32 passed in 0.45s.
+- **What's Next:** Checkpoint 1.5 🔒: Review Phase 1 coverage before unlocking Phase 2 (Gemma 4 Vision Adapter).
 
 ### Session 3 — Task 1.3: Metadata & QR Detectors (2026-10-03)
 - **What was done:**

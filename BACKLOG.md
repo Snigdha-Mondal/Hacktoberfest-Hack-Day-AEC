@@ -21,8 +21,9 @@
   - Extract EXIF/GPS metadata from images.
   - Detect and decode QR codes / barcodes to inspect URL or text payloads.
   - Added BoundingBox calculation and masked payload classification. Verified with 6 tests (25 total suite).
-- [ ] **Task 1.4: Original File Immutability Test**
+- [x] **Task 1.4: Original File Immutability Test**
   - Write test proving input file SHA-256 hash never changes.
+  - Added FileGuard with baseline SHA-256 hashing and zero-overwrite protection. Verified with 7 tests (32 total suite).
 - [ ] **🔒 Checkpoint 1.5: Review Phase 1 Detector Coverage**
   - Human review of detected patterns, masking rules, and test results.
 
