@@ -7,13 +7,24 @@
 
 ## 1. Project Status Overview
 - **Current Phase:** Phase 1 (Project Scaffolding & Deterministic Foundation)
-- **Active Task:** Task 1.2 (Regex & Secret Detector)
-- **Build Status:** Green (7/7 tests passing)
+- **Active Task:** Task 1.3 (Metadata & QR Detectors)
+- **Build Status:** Green (19/19 tests passing)
 - **Overall Health:** 🟢 On Track
 
 ---
 
 ## 2. Session Log
+
+### Session 2 — Task 1.2: Regex & Secret Detector (2026-10-03)
+- **What was done:**
+  - Implemented [`app/detectors/regex_detector.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/app/detectors/regex_detector.py):
+    - High-entropy credential rules: OpenAI (`sk-proj-`, `sk-admin-`), Anthropic (`sk-ant-`), Google AI (`AIza`), GitHub (`ghp_`, `github_pat_`), AWS (`AKIA`, `ASIA`), Slack (`xoxb-`), JWT, and RSA/EC Private Key headers.
+    - Personal identifiers: Emails, Phone numbers, and US Social Security Numbers (SSNs).
+    - Credit Card numbers with live **Luhn checksum algorithm** validation to avoid false alarms.
+    - Span overlap resolution so sub-matches (e.g. token in git URL) aren't double-reported.
+  - Implemented unit test suite in [`tests/test_regex_detector.py`](file:///C:/Users/snigd/.gemini/antigravity-ide/scratch/safedrop/tests/test_regex_detector.py) covering 12 test cases.
+- **Evidence:** Ran `.\.venv\Scripts\pytest -v` -> 19 passed in 0.18s.
+- **What's Next:** Execute Phase 1, Task 1.3: Metadata (EXIF/GPS) and QR/Barcode detectors.
 
 ### Session 1 — Task 1.1: Environment & Schemas (2026-10-03)
 - **What was done:**

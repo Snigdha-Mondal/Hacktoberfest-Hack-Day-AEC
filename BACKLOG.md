@@ -13,9 +13,10 @@
   - Setup `pyproject.toml`, directory structure, and basic dependencies.
   - Define core Pydantic models (`Finding`, `RiskReport`, `Location`).
   - Added secret masking utility and defensive validation. Verified with 7 passing tests.
-- [ ] **Task 1.2: Regex & Secret Detector**
+- [x] **Task 1.2: Regex & Secret Detector**
   - Implement regex patterns for OpenAI keys, AWS keys, JWTs, emails, phone numbers, and SSNs.
   - Implement deterministic secret masking utility (e.g. `sk-live-••••••91a`).
+  - Added Luhn validation for credit cards and span overlap resolution. Verified with 12 tests (19 total suite).
 - [ ] **Task 1.3: Metadata & QR Detectors**
   - Extract EXIF/GPS metadata from images.
   - Detect and decode QR codes / barcodes to inspect URL or text payloads.
