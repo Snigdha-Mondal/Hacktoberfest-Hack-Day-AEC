@@ -139,17 +139,17 @@ class RegexDetector:
                 name="Email Address",
                 category=SensitiveCategory.EMAIL,
                 pattern=r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b",
-                risk=RiskLevel.LOW,
-                reason="Personal email address. Can be harvested for spam, phishing, or correlation.",
+                risk=RiskLevel.CRITICAL,
+                reason="Direct personal contact identifier. Critical risk of spear-phishing, credential stuffing, and identity harvesting.",
                 confidence=0.95,
             ),
             RegexRule(
                 name="Phone Number",
                 category=SensitiveCategory.PHONE,
                 pattern=r"\b(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b",
-                risk=RiskLevel.MEDIUM,
-                reason="Phone number. Personal contact identifier subject to privacy risks.",
-                confidence=0.88,
+                risk=RiskLevel.CRITICAL,
+                reason="Direct personal contact identifier. Critical risk of SMS phishing, SIM swapping, and harassment.",
+                confidence=0.92,
             ),
         ]
 

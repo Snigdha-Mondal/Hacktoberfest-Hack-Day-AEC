@@ -44,6 +44,7 @@ OPENAI_API_KEY="sk-proj-a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0"
 AWS_ACCESS_KEY_ID="AKIAIOSFODNN7EXAMPLE"
 BILLING_CARD="4532 0150 1234 5671"
 SUPPORT_EMAIL="snigdha@safedrop.dev"
+SUPPORT_PHONE="+1-555-867-5309"
 """
 
 # Simulated Gemma 4 multimodal response for employee badge image with adversarial prompt injection

@@ -67,7 +67,16 @@ def test_email_detection(detector):
     findings = detector.scan_text(text)
     assert len(findings) == 1
     assert findings[0].category == SensitiveCategory.EMAIL
-    assert findings[0].risk == RiskLevel.LOW
+    assert findings[0].risk == RiskLevel.CRITICAL
+
+
+def test_phone_detection(detector):
+    text = "Direct hotline: +1-555-867-5309"
+    findings = detector.scan_text(text)
+    assert len(findings) == 1
+    assert findings[0].category == SensitiveCategory.PHONE
+    assert findings[0].risk == RiskLevel.CRITICAL
+
 
 
 def test_ssn_detection(detector):

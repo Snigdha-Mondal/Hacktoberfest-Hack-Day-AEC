@@ -23,6 +23,8 @@ from app.risk.policy import (
 def test_category_sensitivity_definitions():
     assert CATEGORY_SENSITIVITY[SensitiveCategory.API_KEY] == 1.0
     assert CATEGORY_SENSITIVITY[SensitiveCategory.PASSWORD] == 1.0
+    assert CATEGORY_SENSITIVITY[SensitiveCategory.EMAIL] >= 0.9
+    assert CATEGORY_SENSITIVITY[SensitiveCategory.PHONE] >= 0.9
     assert CATEGORY_SENSITIVITY[SensitiveCategory.BANK_DATA] >= 0.9
     assert CATEGORY_SENSITIVITY[SensitiveCategory.FACE] >= 0.6
 
@@ -37,13 +39,23 @@ def test_compute_finding_risk():
     assert risk_level == RiskLevel.CRITICAL
     assert score >= 0.75
 
-    # Phone number with medium confidence
+    # Direct contact PII: Phone number with high confidence is CRITICAL
     risk_level, score = compute_finding_risk(
         category=SensitiveCategory.PHONE,
-        confidence=0.7,
+        confidence=0.9,
         exposure=1.0,
     )
-    assert risk_level in (RiskLevel.MEDIUM, RiskLevel.LOW)
+    assert risk_level == RiskLevel.CRITICAL
+    assert score >= 0.75
+
+    # Low sensitivity item (OTHER) with low confidence is LOW
+    risk_level, score = compute_finding_risk(
+        category=SensitiveCategory.OTHER,
+        confidence=0.5,
+        exposure=1.0,
+    )
+    assert risk_level == RiskLevel.LOW
+
 
 
 def test_calculate_iou_and_overlap():
