@@ -222,8 +222,15 @@ async function uploadAndScan(file) {
     });
 
     if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.detail || "Scanning failed.");
+      let errorMsg = `Server error (${res.status})`;
+      try {
+        const err = await res.json();
+        if (err && err.detail) errorMsg = err.detail;
+      } catch (_) {
+        const text = await res.text();
+        if (text) errorMsg = text.substring(0, 150);
+      }
+      throw new Error(errorMsg);
     }
 
     currentSession = await res.json();

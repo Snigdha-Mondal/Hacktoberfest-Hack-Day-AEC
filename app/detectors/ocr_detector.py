@@ -12,22 +12,25 @@ from app.model.schemas import (
 )
 
 
+_SHARED_ENGINE = None
+
+
 class OCRDetector:
     """Extracts text regions from images using local ONNX RapidOCR and evaluates findings via RegexDetector."""
 
     def __init__(self):
-        self._engine = None
         self._regex_detector = RegexDetector()
 
     def _get_engine(self):
-        if self._engine is None:
+        global _SHARED_ENGINE
+        if _SHARED_ENGINE is None:
             try:
                 from rapidocr_onnxruntime import RapidOCR
 
-                self._engine = RapidOCR()
+                _SHARED_ENGINE = RapidOCR()
             except Exception:
-                self._engine = False
-        return self._engine if self._engine is not False else None
+                _SHARED_ENGINE = False
+        return _SHARED_ENGINE if _SHARED_ENGINE is not False else None
 
     def scan_image(
         self, image_path: Union[str, Path], img_width: int, img_height: int

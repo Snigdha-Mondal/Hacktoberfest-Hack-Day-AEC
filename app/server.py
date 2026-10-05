@@ -74,6 +74,17 @@ def image_to_base64_data_url(img: Image.Image, img_format: str = "PNG") -> str:
     return f"data:{mime};base64,{b64}"
 
 
+@app.on_event("startup")
+def startup_prewarm():
+    """Pre-warm singleton OCR engine in memory on startup so initial scan is fast."""
+    try:
+        from app.detectors.ocr_detector import OCRDetector
+
+        OCRDetector()._get_engine()
+    except Exception:
+        pass
+
+
 @app.get("/api/health")
 def health_check():
     return {

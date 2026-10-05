@@ -21,6 +21,23 @@ from app.model.prompt import (
 from app.model.schemas import Finding
 
 
+import socket
+from urllib.parse import urlparse
+
+
+def _is_host_reachable(url: str, timeout: float = 0.5) -> bool:
+    try:
+        parsed = urlparse(url)
+        host = parsed.hostname or "127.0.0.1"
+        if host == "localhost":
+            host = "127.0.0.1"
+        port = parsed.port or (443 if parsed.scheme == "https" else 80)
+        with socket.create_connection((host, port), timeout=timeout):
+            return True
+    except Exception:
+        return False
+
+
 class GemmaVisionAdapter:
     """Client adapter for communicating with local Gemma 4 multimodal vision models."""
 
@@ -73,6 +90,16 @@ class GemmaVisionAdapter:
                 "File does not exist or cannot be accessed.",
             )
 
+        if not _is_host_reachable(self.base_url):
+            return (
+                [],
+                [
+                    f"Ollama connection failed: Unable to connect to local service at {self.base_url}. "
+                    "Make sure Ollama is running (`ollama serve`)."
+                ],
+                "Gemma 4 visual analysis unavailable (offline/service unreachable).",
+            )
+
         try:
             b64_img, img_width, img_height = self._encode_image(path)
         except Exception as e:
@@ -99,9 +126,10 @@ class GemmaVisionAdapter:
         }
 
         url = f"{self.base_url}/api/chat"
+        client_timeout = httpx.Timeout(self.timeout, connect=2.0)
 
         try:
-            with httpx.Client(timeout=self.timeout) as client:
+            with httpx.Client(timeout=client_timeout) as client:
                 response = client.post(url, json=payload)
 
             if response.status_code != 200:
