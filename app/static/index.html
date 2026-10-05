@@ -169,8 +169,10 @@
               <span class="subtext">Hover or click boxes to inspect findings</span>
             </div>
             <div class="canvas-wrapper" id="canvas-wrapper">
-              <img id="img-original" alt="Original Image">
-              <svg id="bbox-overlay" class="bbox-overlay"></svg>
+              <div class="image-stage" id="image-stage">
+                <img id="img-original" alt="Original Image">
+                <svg id="bbox-overlay" class="bbox-overlay"></svg>
+              </div>
             </div>
           </div>
 
@@ -181,7 +183,9 @@
               <span class="subtext" id="sanitized-subtitle">Safe for multimodal AI ingestion</span>
             </div>
             <div class="canvas-wrapper">
-              <img id="img-preview" alt="Sanitized Live Preview">
+              <div class="image-stage">
+                <img id="img-preview" alt="Sanitized Live Preview">
+              </div>
             </div>
           </div>
         </div>

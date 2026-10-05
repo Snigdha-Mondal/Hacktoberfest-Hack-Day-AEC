@@ -268,10 +268,22 @@ function displayWorkbench() {
 
   // Load Original Image
   imgOriginal.onload = () => {
-    drawBoundingBoxes();
-    updateLivePreview();
+    requestAnimationFrame(() => {
+      drawBoundingBoxes();
+      updateLivePreview();
+    });
   };
   imgOriginal.src = image_data;
+
+  // Responsive resize observer to re-align overlay if image scales
+  if (window.ResizeObserver && !window.__imgResizeObserver) {
+    window.__imgResizeObserver = new ResizeObserver(() => {
+      if (currentSession && imgOriginal.complete) {
+        requestAnimationFrame(drawBoundingBoxes);
+      }
+    });
+    window.__imgResizeObserver.observe(imgOriginal);
+  }
 
   renderFindingsDeck();
 }
@@ -287,17 +299,22 @@ function drawBoundingBoxes() {
 
   if (natW === 0 || dispW === 0) return;
 
-  const scaleX = dispW / natW;
-  const scaleY = dispH / natH;
+  // Pin overlay exactly to displayed image bounds
+  bboxOverlay.style.width = `${dispW}px`;
+  bboxOverlay.style.height = `${dispH}px`;
+  bboxOverlay.style.left = `${imgOriginal.offsetLeft}px`;
+  bboxOverlay.style.top = `${imgOriginal.offsetTop}px`;
+  bboxOverlay.setAttribute("viewBox", `0 0 ${natW} ${natH}`);
+  bboxOverlay.setAttribute("preserveAspectRatio", "none");
 
   currentSession.report.findings.forEach((f) => {
     if (!f.location) return;
 
     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect.setAttribute("x", f.location.x * scaleX);
-    rect.setAttribute("y", f.location.y * scaleY);
-    rect.setAttribute("width", f.location.width * scaleX);
-    rect.setAttribute("height", f.location.height * scaleY);
+    rect.setAttribute("x", f.location.x);
+    rect.setAttribute("y", f.location.y);
+    rect.setAttribute("width", f.location.width);
+    rect.setAttribute("height", f.location.height);
     rect.setAttribute("id", `bbox-${f.id}`);
     rect.setAttribute(
       "class",
