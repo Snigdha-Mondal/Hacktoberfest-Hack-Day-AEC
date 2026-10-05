@@ -135,7 +135,7 @@ SafeDrop enforces strict risk tiering aligned with GDPR and modern security stan
 
 ### 🌐 Live Public Hosted Demo (Instant Access)
 Judges and evaluators can interact with SafeDrop live without any local setup:
-👉 **[https://meaningful-gpl-big-shannon.trycloudflare.com](https://meaningful-gpl-big-shannon.trycloudflare.com)**
+👉 **[https://safedrop-50yt.onrender.com](https://safedrop-50yt.onrender.com)**
 
 ### 1. Local Setup (Optional)
 ```bash
