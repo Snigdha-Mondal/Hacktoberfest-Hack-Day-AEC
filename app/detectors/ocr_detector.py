@@ -1,6 +1,6 @@
 """Deterministic OCR detector for text, credentials, and PII found in images."""
 from pathlib import Path
-from typing import List, Union
+from typing import Any, List, Union
 
 from app.detectors.regex_detector import RegexDetector
 from app.model.schemas import (
@@ -27,7 +27,7 @@ class OCRDetector:
             try:
                 from rapidocr_onnxruntime import RapidOCR
 
-                _SHARED_ENGINE = RapidOCR()
+                _SHARED_ENGINE = RapidOCR(use_angle_cls=False)
             except Exception:
                 _SHARED_ENGINE = False
         return _SHARED_ENGINE if _SHARED_ENGINE is not False else None
@@ -41,8 +41,27 @@ class OCRDetector:
         if not engine:
             return findings
 
+        # Downsample large phone/camera images during OCR to conserve RAM on 512MB hosts
+        max_dim = max(img_width, img_height)
+        scale_factor = 1.0
+        ocr_input: Union[str, Any] = str(image_path)
+        if max_dim > 1600:
+            scale_factor = 1600.0 / max_dim
+            try:
+                from PIL import Image
+                import numpy as np
+
+                with Image.open(image_path) as im:
+                    new_w = max(1, int(img_width * scale_factor))
+                    new_h = max(1, int(img_height * scale_factor))
+                    resized = im.resize((new_w, new_h), Image.Resampling.BILINEAR)
+                    ocr_input = np.array(resized)
+            except Exception:
+                ocr_input = str(image_path)
+                scale_factor = 1.0
+
         try:
-            results, _ = engine(str(image_path))
+            results, _ = engine(ocr_input)
         except Exception:
             return findings
 
@@ -60,8 +79,13 @@ class OCRDetector:
                 continue
 
             # Convert box_points: [[x1, y1], [x2, y2], [x3, y3], [x4, y4]] to integer pixel BoundingBox
-            xs = [p[0] for p in box_points]
-            ys = [p[1] for p in box_points]
+            if scale_factor != 1.0:
+                xs = [p[0] / scale_factor for p in box_points]
+                ys = [p[1] / scale_factor for p in box_points]
+            else:
+                xs = [p[0] for p in box_points]
+                ys = [p[1] for p in box_points]
+
             bx = max(0, int(min(xs)))
             by = max(0, int(min(ys)))
             bw = max(1, min(img_width - bx, int(max(xs) - min(xs))))

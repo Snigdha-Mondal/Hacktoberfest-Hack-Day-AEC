@@ -5,9 +5,18 @@ safe export downloads, and cryptographic audit certificates.
 """
 from __future__ import annotations
 
-import base64
-import io
 import os
+# Constrain thread pools to 1 to prevent OOM kills on 512MB RAM cloud hosts
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+os.environ["ORT_INTRA_OP_NUM_THREADS"] = "1"
+
+import base64
+import gc
+import io
 import pathlib
 import uuid
 from typing import Any, Dict, List, Optional
@@ -167,7 +176,12 @@ async def scan_file(file: UploadFile = File(...)):
         original_file_hash=guard.initial_hash,
     )
 
-    # Cache session
+    # Cache session and prune oldest to prevent unbounded memory growth
+    if len(SESSIONS) >= 10:
+        oldest_key = next(iter(SESSIONS))
+        del SESSIONS[oldest_key]
+        gc.collect()
+
     SESSIONS[file_id] = {
         "file_path": temp_path,
         "file_name": safe_filename,
