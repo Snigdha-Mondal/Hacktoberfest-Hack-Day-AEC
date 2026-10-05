@@ -13,10 +13,6 @@
 
 <br/>
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Online-success.svg?style=for-the-badge&logo=cloudflare)](https://meaningful-gpl-big-shannon.trycloudflare.com)
-
-> 🚀 **Live Interactive Demo:** [https://meaningful-gpl-big-shannon.trycloudflare.com](https://meaningful-gpl-big-shannon.trycloudflare.com)
-
 *Before an image or document is shared with an AI system, SafeDrop inspects it for sensitive credentials, direct contact PII, biometric faces, and QR codes — explains the risks, and exports non-destructive sanitized copies without modifying or silently uploading the original.*
 
 </div>
