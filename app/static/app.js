@@ -12,10 +12,14 @@ let actionOverrides = {}; // { finding_id: "blackout" | "blur" | "pixelate" | "n
 const dropzone = document.getElementById("dropzone");
 const fileInput = document.getElementById("file-input");
 const btnBrowse = document.getElementById("btn-browse");
-const heroBanner = document.getElementById("hero-banner");
-const uploadSection = document.getElementById("upload-section");
+const heroView = document.getElementById("hero-view");
 const scanLoading = document.getElementById("scan-loading");
 const workbench = document.getElementById("workbench");
+const btnBackHero = document.getElementById("btn-back-hero");
+const btnWatchDemo = document.getElementById("btn-watch-demo");
+const btnPlaySample = document.getElementById("btn-play-sample");
+const menuToggle = document.getElementById("menu-toggle");
+const mainHeader = document.getElementById("main-header");
 
 // Workbench Elements
 const wbFilename = document.getElementById("wb-filename");
@@ -43,48 +47,94 @@ const sampleContract = document.getElementById("sample-contract");
 
 // Setup Event Listeners
 function init() {
-  btnBrowse.addEventListener("click", () => fileInput.click());
-  fileInput.addEventListener("change", (e) => {
-    if (e.target.files.length > 0) uploadAndScan(e.target.files[0]);
-  });
+  if (btnBrowse) {
+    btnBrowse.addEventListener("click", () => fileInput && fileInput.click());
+  }
 
-  // Drag and drop handlers
-  dropzone.addEventListener("dragover", (e) => {
+  if (fileInput) {
+    fileInput.addEventListener("change", (e) => {
+      if (e.target.files.length > 0) uploadAndScan(e.target.files[0]);
+    });
+  }
+
+  // Responsive mobile menu toggle
+  if (menuToggle && mainHeader) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mainHeader.classList.toggle("menu-open");
+      menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+  }
+
+  // Dropzone card drag and drop handlers
+  if (dropzone) {
+    dropzone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropzone.classList.add("dragover");
+    });
+    dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+    dropzone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropzone.classList.remove("dragover");
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        uploadAndScan(e.dataTransfer.files[0]);
+      }
+    });
+    // Clicking the demo card visual opens file picker if play button wasn't clicked
+    dropzone.addEventListener("click", (e) => {
+      if (e.target.closest("#btn-play-sample")) return;
+      if (fileInput) fileInput.click();
+    });
+  }
+
+  // Window-level drag and drop support
+  window.addEventListener("dragover", (e) => {
     e.preventDefault();
-    dropzone.classList.add("dragover");
   });
-  dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
-  dropzone.addEventListener("drop", (e) => {
+  window.addEventListener("drop", (e) => {
     e.preventDefault();
-    dropzone.classList.remove("dragover");
-    if (e.dataTransfer.files.length > 0) {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       uploadAndScan(e.dataTransfer.files[0]);
     }
   });
 
-  btnExportSafe.addEventListener("click", exportSanitized);
-  btnAuditReport.addEventListener("click", downloadAuditReport);
-  btnUploadNew.addEventListener("click", resetToUpload);
+  if (btnBackHero) btnBackHero.addEventListener("click", resetToUpload);
+  if (btnUploadNew) btnUploadNew.addEventListener("click", resetToUpload);
+  if (btnExportSafe) btnExportSafe.addEventListener("click", exportSanitized);
+  if (btnAuditReport) btnAuditReport.addEventListener("click", downloadAuditReport);
 
-  btnRedactAll.addEventListener("click", () => {
-    if (!currentSession) return;
-    currentSession.report.findings.forEach((f) => {
-      actionOverrides[f.id] = "blackout";
+  if (btnWatchDemo) {
+    btnWatchDemo.addEventListener("click", () => loadSampleImage("developer_screenshot.png"));
+  }
+  if (btnPlaySample) {
+    btnPlaySample.addEventListener("click", (e) => {
+      e.stopPropagation();
+      loadSampleImage("developer_screenshot.png");
     });
-    renderFindingsDeck();
-    updateLivePreview();
-  });
+  }
 
-  btnResetAll.addEventListener("click", () => {
-    actionOverrides = {};
-    renderFindingsDeck();
-    updateLivePreview();
-  });
+  if (btnRedactAll) {
+    btnRedactAll.addEventListener("click", () => {
+      if (!currentSession) return;
+      currentSession.report.findings.forEach((f) => {
+        actionOverrides[f.id] = "blackout";
+      });
+      renderFindingsDeck();
+      updateLivePreview();
+    });
+  }
+
+  if (btnResetAll) {
+    btnResetAll.addEventListener("click", () => {
+      actionOverrides = {};
+      renderFindingsDeck();
+      updateLivePreview();
+    });
+  }
 
   // Quick Samples
-  sampleDev.addEventListener("click", () => loadSampleImage("developer_screenshot.png"));
-  sampleBadge.addEventListener("click", () => loadSampleImage("employee_badge.jpg"));
-  sampleContract.addEventListener("click", () => loadSampleImage("legal_contract.png"));
+  if (sampleDev) sampleDev.addEventListener("click", () => loadSampleImage("developer_screenshot.png"));
+  if (sampleBadge) sampleBadge.addEventListener("click", () => loadSampleImage("employee_badge.jpg"));
+  if (sampleContract) sampleContract.addEventListener("click", () => loadSampleImage("legal_contract.png"));
 
   window.addEventListener("resize", () => {
     if (currentSession) drawBoundingBoxes();
@@ -134,9 +184,9 @@ function createMockCanvasAndScan(filename) {
 
 function showLoading(show, message) {
   if (show) {
-    uploadSection.style.display = "none";
+    if (heroView) heroView.style.display = "none";
     workbench.style.display = "none";
-    scanLoading.style.display = "block";
+    scanLoading.style.display = "flex";
     if (message) document.getElementById("loading-step").textContent = message;
   } else {
     scanLoading.style.display = "none";
@@ -172,7 +222,7 @@ async function uploadAndScan(file) {
 }
 
 function displayWorkbench() {
-  uploadSection.style.display = "none";
+  if (heroView) heroView.style.display = "none";
   workbench.style.display = "flex";
 
   const { file_name, file_hash, report, image_data } = currentSession;
@@ -392,9 +442,9 @@ async function downloadAuditReport() {
 function resetToUpload() {
   currentSession = null;
   actionOverrides = {};
-  fileInput.value = "";
-  workbench.style.display = "none";
-  uploadSection.style.display = "flex";
+  if (fileInput) fileInput.value = "";
+  if (workbench) workbench.style.display = "none";
+  if (heroView) heroView.style.display = "";
 }
 
 function escapeHtml(text) {

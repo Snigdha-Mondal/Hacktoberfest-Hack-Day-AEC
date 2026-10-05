@@ -2,197 +2,265 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SafeDrop — The Antivirus Layer for Multimodal AI</title>
-  <meta name="description" content="Local preflight privacy firewall detecting credentials, PII, faces, and QR codes before AI prompt ingestion.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SafeDrop — Stop Leaking Secrets to Multimodal AI</title>
+  <meta name="description" content="Local-first preflight privacy firewall preventing accidental secret and PII leaks before multimodal AI ingestion.">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('motion-pending');
+      window.__motionTimeout = setTimeout(function() {
+        document.documentElement.classList.remove('motion-pending');
+      }, 3500);
+    }
+  </script>
+
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
-  <!-- Navigation Bar -->
-  <header class="app-header">
-    <div class="header-left">
-      <div class="logo-mark">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          <path d="M9 12l2 2 4-4"/>
-        </svg>
-      </div>
-      <div class="logo-text">
-        <span class="brand-title">SafeDrop</span>
-        <span class="badge-offline">100% LOCAL FIREWALL</span>
-      </div>
-    </div>
-    <div class="header-right">
-      <span class="engine-tag">Gemma 4 + Deterministic Code</span>
-      <a href="https://github.com/Snigdha-Mondal/Hacktoberfest-Hack-Day-AEC" target="_blank" class="btn-github" id="github-link">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-        </svg>
-        GitHub
-      </a>
-    </div>
-  </header>
-
-  <!-- Main Container -->
-  <main class="main-content">
-    
-    <!-- Hero Section -->
-    <section class="hero-banner" id="hero-banner">
-      <h1>The Antivirus Layer for Multimodal AI</h1>
-      <p class="subtitle">
-        Inspect and sanitize credentials, PII, biometric faces, and QR codes before sending images to AI models.
-        <span class="highlight">Original files are never overwritten. Zero data leaves your computer.</span>
-      </p>
-    </section>
-
-    <!-- Upload Dropzone Section -->
-    <section class="upload-section" id="upload-section">
-      <div class="dropzone" id="dropzone">
-        <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp" hidden>
-        <div class="dropzone-icon">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="17 8 12 3 7 8"/>
-            <line x1="12" y1="3" x2="12" y2="15"/>
-          </svg>
-        </div>
-        <h3>Drop screenshot, document, or ID card here</h3>
-        <p>Supports PNG, JPEG, WEBP &bull; Max 25MB &bull; 100% Local Ingestion</p>
-        <button type="button" class="btn-primary" id="btn-browse">Browse Image</button>
-      </div>
-
-      <!-- Quick sample test buttons -->
-      <div class="sample-pills">
-        <span class="pill-label">Quick test samples:</span>
-        <button type="button" class="pill-btn" id="sample-dev">Developer Screenshot</button>
-        <button type="button" class="pill-btn" id="sample-badge">Employee ID Badge</button>
-        <button type="button" class="pill-btn" id="sample-contract">Contract Document</button>
-      </div>
-    </section>
-
-    <!-- Loading State Indicator -->
-    <div class="scan-loading" id="scan-loading" style="display: none;">
-      <div class="spinner"></div>
-      <div class="loading-text">
-        <h4>Analyzing Visual Preflight Risks...</h4>
-        <p id="loading-step">Running deterministic regex & QR scans &bull; Inspecting visual semantics with Gemma 4</p>
-      </div>
-    </div>
-
-    <!-- Preflight Inspection Workbench (hidden until upload) -->
-    <section class="workbench" id="workbench" style="display: none;">
+  <main class="viewport">
+    <section class="screen" id="screen">
       
-      <!-- File Status Bar -->
-      <div class="workbench-bar">
-        <div class="bar-file-info">
-          <span class="file-name" id="wb-filename">filename.png</span>
-          <span class="hash-pill" id="wb-hash" title="Cryptographic SHA-256 Hash">SHA-256: ...</span>
-          <span class="immutable-tag">IMMUTABLE (READ-ONLY)</span>
-        </div>
-        <div class="bar-risk-pill" id="wb-risk-badge">
-          CRITICAL RISK
-        </div>
-      </div>
+      <!-- Full-Bleed Cinematic Background Video -->
+      <video class="background" autoplay muted loop playsinline disablepictureinpicture aria-hidden="true">
+        <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260808_064556_051587f1-74a1-4336-8c05-4dde3594ed05.mp4" type="video/mp4">
+      </video>
 
-      <!-- Summary Counters -->
-      <div class="summary-cards">
-        <div class="stat-card" id="card-critical">
-          <div class="stat-number" id="count-critical">0</div>
-          <div class="stat-label">Critical Findings</div>
-        </div>
-        <div class="stat-card" id="card-sensitive">
-          <div class="stat-number" id="count-sensitive">0</div>
-          <div class="stat-label">Sensitive / PII</div>
-        </div>
-        <div class="stat-card" id="card-metadata">
-          <div class="stat-number" id="count-metadata">Cleaned</div>
-          <div class="stat-label">EXIF GPS Stripped</div>
-        </div>
-        <div class="stat-card" id="card-status">
-          <div class="stat-number stat-verdict" id="text-verdict">BLOCKED</div>
-          <div class="stat-label">Preflight Firewall Decision</div>
-        </div>
-      </div>
+      <!-- Header Top Bar -->
+      <header class="header" id="main-header">
+        <a class="brand" href="/" aria-label="SafeDrop home">
+          <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <clipPath id="brand-disc">
+                <circle cx="12.5" cy="12.5" r="12.5" />
+              </clipPath>
+            </defs>
+            <g clip-path="url(#brand-disc)">
+              <circle cx="12.5" cy="12.5" r="12.5" fill="#ededed" />
+              <path d="M12.5 2.5 L19.5 12.5 L12.5 22.5 L5.5 12.5 Z" fill="#050606" />
+              <path d="M12.5 2.5 L19.5 12.5 L12.5 14 Z" fill="#737778" />
+              <path d="M12.5 2.5 L5.5 12.5 L12.5 14 Z" fill="#fafafa" />
+              <path d="M12.5 14 L19.5 12.5 L12.5 22.5 Z" fill="#0a0b0b" />
+            </g>
+          </svg>
+          <span class="brand-name">SafeDrop</span>
+        </a>
 
-      <!-- Visual Comparison View -->
-      <div class="view-grid">
-        <!-- Original Canvas with Bounding Boxes -->
-        <div class="panel view-panel">
-          <div class="panel-header">
-            <h4>Original Image & Detected Risk Regions</h4>
-            <span class="subtext">Hover or click boxes to inspect findings</span>
+        <div class="header-actions" id="tablet-navigation">
+          <nav class="nav">
+            <a href="#" class="active" id="nav-preflight">Preflight</a>
+            <a href="/benchmark/benchmark_results.md" target="_blank">Benchmark</a>
+            <a href="/skills/privacy-audit/SKILL.md" target="_blank">Agent Skill</a>
+            <a href="https://github.com/Snigdha-Mondal/Hacktoberfest-Hack-Day-AEC" target="_blank">Docs</a>
+          </nav>
+
+          <div class="time-panel">
+            <span class="time-label">Status</span>
+            <span class="time-value">100% Local Firewall &bull; Zero Egress</span>
           </div>
-          <div class="canvas-wrapper" id="canvas-wrapper">
-            <img id="img-original" alt="Original Image">
-            <svg id="bbox-overlay" class="bbox-overlay"></svg>
-          </div>
+
+          <a href="https://github.com/Snigdha-Mondal/Hacktoberfest-Hack-Day-AEC" target="_blank" class="sign-up" id="github-link">
+            GitHub
+          </a>
         </div>
 
-        <!-- Sanitized Redacted Preview -->
-        <div class="panel view-panel">
-          <div class="panel-header">
-            <h4>Live Sanitized Preview</h4>
-            <span class="subtext" id="sanitized-subtitle">Safe for multimodal AI ingestion</span>
-          </div>
-          <div class="canvas-wrapper">
-            <img id="img-preview" alt="Sanitized Live Preview">
-          </div>
-        </div>
-      </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="tablet-navigation">
+          <svg viewBox="0 0 20 20" fill="none">
+            <line class="line-top" x1="3" y1="7" x2="17" y2="7" />
+            <line class="line-bottom" x1="3" y1="13" x2="17" y2="13" />
+          </svg>
+        </button>
+      </header>
 
-      <!-- Finding Review Deck -->
-      <div class="panel findings-deck">
-        <div class="panel-header findings-header">
-          <div>
-            <h3>Review Findings & Customize Redactions</h3>
-            <p class="subtext">Adjust the action for each region before safe export.</p>
-          </div>
-          <div class="bulk-actions">
-            <button type="button" class="btn-secondary" id="btn-redact-all">Redact All</button>
-            <button type="button" class="btn-secondary" id="btn-reset-all">Reset to Recommended</button>
-          </div>
-        </div>
+      <!-- Hero Section (Visible in Initial State) -->
+      <section class="hero" id="hero-view">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            <span class="line line-one"><span class="line-reveal">Stop Leaking</span></span>
+            <span class="line line-two"><span class="line-reveal">Secrets to Multimodal AI.</span></span>
+          </h1>
 
-        <div class="findings-list" id="findings-list">
-          <!-- Dynamically populated finding cards -->
-        </div>
-      </div>
+          <p class="hero-copy">
+            Your screenshots and docs contain keys, PII, and private data.<br>
+            SafeDrop sanitizes them locally before AI prompt ingestion,<br>
+            so every upload is protected with zero cloud egress.
+          </p>
 
-      <!-- Action Export Footer -->
-      <div class="export-footer">
-        <div class="export-left">
-          <button type="button" class="btn-secondary" id="btn-audit-report">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-              <polyline points="10 9 9 9 8 9"/>
-            </svg>
-            Download Audit Report (JSON)
+          <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp" hidden>
+
+          <button class="primary-cta" id="btn-browse" type="button">
+            <span class="label">Drop Image to Scan</span>
+            <span class="arrow-box">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="2.5" y1="7" x2="11" y2="7"></line>
+                <polyline points="7.5 3.5 11 7 7.5 10.5"></polyline>
+              </svg>
+            </span>
           </button>
-          <button type="button" class="btn-secondary" id="btn-upload-new">
-            Scan Another Image
-          </button>
+
+          <!-- Quick Sample Test Buttons -->
+          <div class="sample-pills">
+            <span class="pill-label">Quick Test Fixtures:</span>
+            <button type="button" class="pill-btn" id="sample-dev">Developer Screenshot</button>
+            <button type="button" class="pill-btn" id="sample-badge">Employee ID</button>
+            <button type="button" class="pill-btn" id="sample-contract">Contract Document</button>
+          </div>
         </div>
-        <div class="export-right">
-          <button type="button" class="btn-export" id="btn-export-safe">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-            <span id="export-btn-text">Download Sanitized Copy</span>
+
+        <!-- Glass Demo & Dropzone Card (Bottom-Right) -->
+        <article class="demo-card" id="demo-card">
+          <div class="demo-visual" id="dropzone">
+            <img src="/static/assets/watch-demo-thumbnail.png" alt="Abstract red and blue smoke">
+            <div class="drop-overlay">
+              <div class="drop-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+              </div>
+              <span class="drop-hint">Drop file here</span>
+            </div>
+            <button class="play" id="btn-play-sample" aria-label="Play demo" type="button">
+              <svg viewBox="0 0 12 14">
+                <path d="M2.5 2.2 L10 7 L2.5 11.8 Z" />
+              </svg>
+            </button>
+          </div>
+          <button class="watch-button" id="btn-watch-demo" type="button">
+            <span>Watch Live Preflight Demo</span>
           </button>
+        </article>
+      </section>
+
+      <!-- Scanning Loading Overlay -->
+      <div class="scan-loading" id="scan-loading" style="display: none;">
+        <div class="loading-glass">
+          <div class="spinner"></div>
+          <div class="loading-text">
+            <h4>Analyzing Preflight Risks...</h4>
+            <p id="loading-step">Running deterministic OCR & regex scans &bull; Inspecting visual semantics</p>
+          </div>
         </div>
       </div>
+
+      <!-- Preflight Inspection Workbench (Appears smoothly upon file scan) -->
+      <section class="workbench" id="workbench" style="display: none;">
+        
+        <!-- File Status Glass Bar -->
+        <div class="workbench-bar glass-panel">
+          <div class="bar-file-info">
+            <button type="button" class="btn-back" id="btn-back-hero" title="Back to home">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <span class="file-name" id="wb-filename">filename.png</span>
+            <span class="hash-pill" id="wb-hash" title="Cryptographic SHA-256 Hash">SHA-256: ...</span>
+            <span class="immutable-tag">IMMUTABLE (READ-ONLY)</span>
+          </div>
+          <div class="bar-risk-pill" id="wb-risk-badge">
+            CRITICAL RISK
+          </div>
+        </div>
+
+        <!-- Summary Stat Cards -->
+        <div class="summary-cards">
+          <div class="stat-card glass-panel" id="card-critical">
+            <div class="stat-number" id="count-critical">0</div>
+            <div class="stat-label">Critical Findings</div>
+          </div>
+          <div class="stat-card glass-panel" id="card-sensitive">
+            <div class="stat-number" id="count-sensitive">0</div>
+            <div class="stat-label">Sensitive / PII</div>
+          </div>
+          <div class="stat-card glass-panel" id="card-metadata">
+            <div class="stat-number" id="count-metadata">Cleaned</div>
+            <div class="stat-label">EXIF GPS Stripped</div>
+          </div>
+          <div class="stat-card glass-panel" id="card-status">
+            <div class="stat-number stat-verdict" id="text-verdict">BLOCKED</div>
+            <div class="stat-label">Firewall Decision</div>
+          </div>
+        </div>
+
+        <!-- Visual Comparison View Grid -->
+        <div class="view-grid">
+          <!-- Original Image with Interactive Bounding Boxes -->
+          <div class="view-panel glass-panel">
+            <div class="panel-header">
+              <h4>Original Image & Detected Risk Regions</h4>
+              <span class="subtext">Hover or click boxes to inspect findings</span>
+            </div>
+            <div class="canvas-wrapper" id="canvas-wrapper">
+              <img id="img-original" alt="Original Image">
+              <svg id="bbox-overlay" class="bbox-overlay"></svg>
+            </div>
+          </div>
+
+          <!-- Sanitized Redacted Preview -->
+          <div class="view-panel glass-panel">
+            <div class="panel-header">
+              <h4>Live Sanitized Preview</h4>
+              <span class="subtext" id="sanitized-subtitle">Safe for multimodal AI ingestion</span>
+            </div>
+            <div class="canvas-wrapper">
+              <img id="img-preview" alt="Sanitized Live Preview">
+            </div>
+          </div>
+        </div>
+
+        <!-- Finding Review Deck -->
+        <div class="findings-deck glass-panel">
+          <div class="panel-header findings-header">
+            <div>
+              <h3>Review Findings & Customize Redactions</h3>
+              <p class="subtext">Adjust the action for each region before safe export.</p>
+            </div>
+            <div class="bulk-actions">
+              <button type="button" class="btn-glass" id="btn-redact-all">Redact All</button>
+              <button type="button" class="btn-glass" id="btn-reset-all">Reset to Recommended</button>
+            </div>
+          </div>
+
+          <div class="findings-list" id="findings-list">
+            <!-- Dynamically populated finding cards -->
+          </div>
+        </div>
+
+        <!-- Action Export Footer -->
+        <div class="export-footer glass-panel">
+          <div class="export-left">
+            <button type="button" class="btn-glass" id="btn-audit-report">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              Download Audit Certificate (JSON)
+            </button>
+            <button type="button" class="btn-glass" id="btn-upload-new">
+              Scan Another File
+            </button>
+          </div>
+          <div class="export-right">
+            <button type="button" class="btn-export-primary" id="btn-export-safe">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span id="export-btn-text">Download Sanitized Copy</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
 
     </section>
-
   </main>
 
   <script src="/static/app.js"></script>
