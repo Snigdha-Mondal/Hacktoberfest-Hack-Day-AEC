@@ -13,6 +13,10 @@
 
 <br/>
 
+[![Live Demo on Render](https://img.shields.io/badge/Live_Demo-Render-46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)](https://safedrop-50yt.onrender.com)
+
+> 🚀 **Live Interactive Demo:** [https://safedrop-50yt.onrender.com](https://safedrop-50yt.onrender.com)
+
 *Before an image or document is shared with an AI system, SafeDrop inspects it for sensitive credentials, direct contact PII, biometric faces, and QR codes — explains the risks, and exports non-destructive sanitized copies without modifying or silently uploading the original.*
 
 </div>
