@@ -42,6 +42,7 @@ SafeDrop is a **local-first privacy firewall and preflight assistant**:
 5. **Risk Fusion Engine:** Calculates composite risk:
    $$\text{Risk Score} = \text{Sensitivity} \times \text{Exposure} \times \text{Confidence}$$
 6. **Non-Destructive Redaction:** Applies Solid Blackout, Gaussian Blur, Pixelation, or EXIF stripping, and exports exclusively to `<file>-safedrop.<ext>`. Original files are preserved byte-for-byte.
+7. **Cinematic Glassmorphic UI:** Features an edge-to-edge dark landing page (inspired by motionsites.ai) with dual-vignette ambient video backgrounds, glassmorphic review cards, and real-time SVG bounding box visualizers.
 
 ---
 
