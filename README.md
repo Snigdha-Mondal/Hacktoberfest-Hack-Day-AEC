@@ -169,6 +169,24 @@ Instantly provisions a secure, public `https://...trycloudflare.com` tunnel URL 
 .\.venv\Scripts\pytest -v
 ```
 
+### 6. Cloud Deployment (Render & Railway)
+
+SafeDrop is pre-configured with `render.yaml`, `Procfile`, and `Dockerfile` for seamless cloud deployment:
+
+#### Deploy on Render (Free Tier)
+1. Sign in to [dashboard.render.com](https://dashboard.render.com) and click **New +** &rarr; **Web Service**.
+2. Connect your GitHub repository: `https://github.com/Snigdha-Mondal/Hacktoberfest-Hack-Day-AEC`.
+3. Render automatically detects `render.yaml` or you can verify:
+   - **Environment:** Python 3
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn app.server:app --host 0.0.0.0 --port $PORT`
+4. Click **Deploy Web Service** to generate your permanent `https://<app-name>.onrender.com` URL.
+
+#### Deploy on Railway
+1. Sign in to [railway.app](https://railway.app) and click **New Project** &rarr; **Deploy from GitHub repo**.
+2. Select `Hacktoberfest-Hack-Day-AEC`.
+3. Railway automatically detects `Procfile` / `Dockerfile` and deploys your preflight privacy firewall with instant HTTPS.
+
 ---
 
 ## 🤖 7. Agent Skill Package (`privacy-audit`)
