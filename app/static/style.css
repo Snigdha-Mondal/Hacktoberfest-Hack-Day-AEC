@@ -390,44 +390,68 @@ video.background {
 
 /* Primary CTA Button */
 .primary-cta {
-  width: var(--cta-width);
-  height: var(--cta-height);
-  border-radius: 7px;
-  background: #fff;
-  color: #111;
-  box-shadow: 0 1px 5px rgba(0,0,0,.38);
-  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: auto;
+  min-width: 224px;
+  height: 48px;
+  padding: 4px 6px 4px 20px;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #101010;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   border: none;
   cursor: pointer;
-  overflow: hidden;
-  font-family: "Reference Sans", Arial, sans-serif;
-  display: block;
+  position: relative;
+  font-family: inherit;
   margin-bottom: 22px;
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.primary-cta:hover {
+  background: #f4f6f8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.primary-cta:active {
+  transform: translateY(0);
+}
+
+.primary-cta.dragover {
+  outline: 2px dashed #3b82f6;
+  outline-offset: 4px;
+  background: #eef6ff;
+  transform: scale(1.02);
 }
 
 .primary-cta .label {
-  position: absolute;
-  left: 8.125%;
-  top: 50%;
-  transform: translateY(-50%);
-  font-weight: 450;
-  letter-spacing: -.3px;
-  font-size: var(--primary-control-font-size);
-  color: #111;
+  position: static;
+  transform: none;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  font-size: 15.5px;
+  color: #101010;
   white-space: nowrap;
 }
 
 .primary-cta .arrow-box {
-  position: absolute;
-  right: 3.125%;
-  top: 14.286%;
-  width: 20.625%;
-  height: 71.429%;
+  position: static;
+  width: 36px;
+  height: 36px;
   border-radius: 7px;
-  background: #070909;
+  background: #0a0c0d;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  transition: background 140ms ease;
+}
+
+.primary-cta:hover .arrow-box {
+  background: #1e2428;
 }
 
 .primary-cta .arrow-box svg {
@@ -1133,8 +1157,7 @@ html.motion-pending .time-panel,
 html.motion-pending .sign-up,
 html.motion-pending .menu-toggle,
 html.motion-pending .hero-copy,
-html.motion-pending .primary-cta,
-html.motion-pending .demo-card {
+html.motion-pending .primary-cta {
   opacity: 0;
 }
 
@@ -1148,15 +1171,6 @@ html.motion-pending .line-reveal {
 
 .nav a:nth-child(1) {
   animation: entrance-nav 480ms cubic-bezier(.16,1,.3,1) 130ms both;
-}
-.nav a:nth-child(2) {
-  animation: entrance-nav 480ms cubic-bezier(.16,1,.3,1) 175ms both;
-}
-.nav a:nth-child(3) {
-  animation: entrance-nav 480ms cubic-bezier(.16,1,.3,1) 220ms both;
-}
-.nav a:nth-child(4) {
-  animation: entrance-nav 480ms cubic-bezier(.16,1,.3,1) 265ms both;
 }
 
 .time-panel {
@@ -1185,10 +1199,6 @@ html.motion-pending .line-reveal {
 
 .primary-cta {
   animation: entrance-action 560ms cubic-bezier(.16,1,.3,1) 960ms both;
-}
-
-.demo-card {
-  animation: entrance-card 920ms cubic-bezier(.22,1,.36,1) 1040ms both;
 }
 
 /* Reduced Motion */

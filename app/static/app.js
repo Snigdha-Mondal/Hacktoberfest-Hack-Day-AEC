@@ -89,13 +89,28 @@ function init() {
   // Window-level drag and drop support
   window.addEventListener("dragover", (e) => {
     e.preventDefault();
+    if (btnBrowse) btnBrowse.classList.add("dragover");
+  });
+  window.addEventListener("dragleave", (e) => {
+    if (!e.relatedTarget && btnBrowse) {
+      btnBrowse.classList.remove("dragover");
+    }
   });
   window.addEventListener("drop", (e) => {
     e.preventDefault();
+    if (btnBrowse) btnBrowse.classList.remove("dragover");
     if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       uploadAndScan(e.dataTransfer.files[0]);
     }
   });
+
+  const navPreflight = document.getElementById("nav-preflight");
+  if (navPreflight) {
+    navPreflight.addEventListener("click", (e) => {
+      e.preventDefault();
+      resetToUpload();
+    });
+  }
 
   if (btnBackHero) btnBackHero.addEventListener("click", resetToUpload);
   if (btnUploadNew) btnUploadNew.addEventListener("click", resetToUpload);
